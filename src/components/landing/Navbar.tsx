@@ -1,12 +1,25 @@
 "use client";
 
 import { motion } from "motion/react";
+import Link from "next/link";
 
 const links = [
-  "Product",
-  "Workflows",
-  "Features",
-  "Docs",
+  {
+    label: "Product",
+    href: "/product",
+  },
+  {
+    label: "Workflows",
+    href: "/workflows",
+  },
+  {
+    label: "Features",
+    href: "/features",
+  },
+  {
+    label: "Docs",
+    href: "/docs",
+  },
 ];
 
 export default function Navbar() {
@@ -20,7 +33,7 @@ export default function Navbar() {
       <nav className="mx-auto flex h-[72px] max-w-[1420px] items-center justify-between rounded-[22px] border border-[#e9e2d9] bg-[#fffdf9]/90 px-6 shadow-[0_12px_45px_rgba(30,41,59,0.07)] backdrop-blur-2xl">
 
         {/* Logo */}
-        <a href="#" className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3">
           <div className="relative flex h-11 w-11 items-center justify-center rounded-[14px] bg-[#17202a] shadow-lg">
             <div className="h-4 w-4 rounded-full bg-[#ff6749]" />
 
@@ -36,32 +49,39 @@ export default function Navbar() {
               Workflow OS
             </div>
           </div>
-        </a>
+        </Link>
 
         {/* Center navigation */}
         <div className="hidden items-center gap-1 rounded-[18px] border border-[#e9e2d9] bg-white/70 p-1.5 md:flex">
           {links.map((link) => (
-            <a
-              key={link}
-              href={`#${link.toLowerCase()}`}
+            <Link
+              key={link.label}
+              href={link.href}
               className="rounded-xl px-5 py-2.5 text-sm text-[#667085] transition hover:bg-[#fff0eb] hover:text-[#ff6749]"
             >
-              {link}
-            </a>
+              {link.label}
+            </Link>
           ))}
         </div>
 
         {/* Actions */}
         <div className="flex items-center gap-5">
-          <button className="hidden text-sm font-medium text-[#667085] hover:text-[#17202a] sm:block">
+          <Link
+            href="/sign-in"
+            className="hidden text-sm font-medium text-[#667085] hover:text-[#17202a] sm:block"
+          >
             Sign in
-          </button>
+          </Link>
 
-          <button className="rounded-xl bg-[#ff6749] px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_25px_rgba(255,103,73,0.22)] transition hover:-translate-y-0.5 hover:bg-[#f4573a]">
+          <Link
+            href="/sign-up"
+            className="rounded-xl bg-[#ff6749] px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_25px_rgba(255,103,73,0.22)] transition hover:-translate-y-0.5 hover:bg-[#f4573a]"
+          >
             Start building
             <span className="ml-2">→</span>
-          </button>
+          </Link>
         </div>
+
       </nav>
     </motion.header>
   );

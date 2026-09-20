@@ -30,7 +30,7 @@ export default function Navbar() {
       transition={{ duration: 0.7 }}
       className="fixed left-0 right-0 top-0 z-50 px-5 pt-5"
     >
-      <nav className="mx-auto flex h-[72px] max-w-[1420px] items-center justify-between rounded-[22px] border border-[#e9e2d9] bg-[#fffdf9]/90 px-6 shadow-[0_12px_45px_rgba(30,41,59,0.07)] backdrop-blur-2xl">
+      <nav className="mx-auto flex h-18 max-w-355 items-center justify-between rounded-[22px] border border-[#e9e2d9] bg-[#fffdf9]/90 px-6 shadow-[0_12px_45px_rgba(30,41,59,0.07)] backdrop-blur-2xl">
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">

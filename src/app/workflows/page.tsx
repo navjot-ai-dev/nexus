@@ -1,3 +1,4 @@
+import Navbar from "@/components/landing/Navbar";
 import Link from "next/link";
 
 const workflows = [
@@ -25,20 +26,7 @@ export default function WorkflowsPage() {
   return (
     <main className="min-h-screen bg-[#fffdf9] text-[#17202a]">
       {/* Header */}
-      <header className="border-b border-black/5">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <Link href="/" className="text-2xl font-black tracking-tight">
-            NEXUS<span className="text-[#ff6749]">.</span>
-          </Link>
-
-          <Link
-            href="/dashboard"
-            className="rounded-full bg-[#17202a] px-5 py-2.5 text-sm font-semibold text-white transition hover:scale-105"
-          >
-            Dashboard
-          </Link>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Hero */}
       <section className="mx-auto max-w-7xl px-6 pb-16 pt-24">

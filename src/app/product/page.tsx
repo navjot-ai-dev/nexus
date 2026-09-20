@@ -1,3 +1,4 @@
+import Navbar from "@/components/landing/Navbar";
 import Link from "next/link";
 
 const capabilities = [
@@ -31,62 +32,7 @@ export default function ProductPage() {
   return (
     <main className="min-h-screen bg-[#fffdf9] text-[#17202a]">
       {/* Navbar */}
-      <header className="sticky top-0 z-50 border-b border-black/5 bg-[#fffdf9]/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link
-            href="/"
-            className="text-2xl font-black tracking-tight"
-          >
-            NEXUS<span className="text-[#ff6749]">.</span>
-          </Link>
-
-          <nav className="hidden items-center gap-7 md:flex">
-            <Link
-              href="/product"
-              className="text-sm font-semibold text-[#ff6749]"
-            >
-              Product
-            </Link>
-
-            <Link
-              href="/workflows"
-              className="text-sm text-gray-600 transition hover:text-[#17202a]"
-            >
-              Workflows
-            </Link>
-
-            <Link
-              href="/features"
-              className="text-sm text-gray-600 transition hover:text-[#17202a]"
-            >
-              Features
-            </Link>
-
-            <Link
-              href="/docs"
-              className="text-sm text-gray-600 transition hover:text-[#17202a]"
-            >
-              Docs
-            </Link>
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <Link
-              href="/sign-in"
-              className="hidden px-4 py-2 text-sm font-semibold text-gray-600 sm:block"
-            >
-              Sign in
-            </Link>
-
-            <Link
-              href="/sign-up"
-              className="rounded-full bg-[#17202a] px-5 py-2.5 text-sm font-semibold text-white transition hover:scale-105"
-            >
-              Start building
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Hero */}
       <section className="mx-auto max-w-7xl px-6 pb-24 pt-24 md:pt-32">

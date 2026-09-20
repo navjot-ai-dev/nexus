@@ -1,3 +1,4 @@
+import Navbar from "@/components/landing/Navbar";
 import Link from "next/link";
 
 const sections = [
@@ -20,35 +21,7 @@ export default function DocsPage() {
     <main className="min-h-screen bg-[#fffdf9] text-[#17202a]">
 
       {/* Navbar */}
-      <header className="sticky top-0 z-50 border-b border-black/5 bg-[#fffdf9]/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-
-          <Link
-            href="/"
-            className="text-2xl font-black tracking-tight"
-          >
-            NEXUS<span className="text-[#ff6749]">.</span>
-          </Link>
-
-          <div className="flex items-center gap-3">
-
-            <Link
-              href="/workflows"
-              className="rounded-full px-4 py-2 text-sm font-medium text-gray-600 transition hover:bg-black/5"
-            >
-              Workflows
-            </Link>
-
-            <Link
-              href="/dashboard"
-              className="rounded-full bg-[#17202a] px-5 py-2.5 text-sm font-semibold text-white transition hover:scale-105"
-            >
-              Dashboard
-            </Link>
-
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
 
       {/* Documentation Layout */}

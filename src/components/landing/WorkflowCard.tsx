@@ -25,7 +25,7 @@ export default function WorkflowCard({
         repeat: Infinity,
         ease: "easeInOut",
       }}
-      className={`absolute z-20 w-[190px] rounded-2xl border border-white/80 bg-white/85 p-4 shadow-[0_20px_50px_rgba(31,41,55,0.12)] backdrop-blur-xl ${className}`}
+      className={`absolute z-20 w-47.5 rounded-2xl border border-white/80 bg-white/85 p-4 shadow-[0_20px_50px_rgba(31,41,55,0.12)] backdrop-blur-xl ${className}`}
     >
       <div className="flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#fff1eb] text-lg">

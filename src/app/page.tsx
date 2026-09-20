@@ -20,7 +20,7 @@ export default function Home() {
               Everything connected
             </p>
 
-            <h2 className="mt-5 text-5xl font-bold tracking-[-0.05em] sm:text-6xl">
+            <h2 className="mt-5 text-5xl font-bold tracking-tighter sm:text-6xl">
               One canvas.
               <br />
               Infinite possibilities.
@@ -35,9 +35,9 @@ export default function Home() {
           {/* workflow visual */}
           <div className="relative mt-20 overflow-hidden rounded-[35px] border border-[#e8e1d8] bg-[#f8f5ef] p-10 shadow-[0_30px_80px_rgba(23,32,42,0.08)]">
 
-            <div className="absolute right-[-100px] top-[-100px] h-[350px] w-[350px] rounded-full bg-[#ffb69e]/20 blur-[100px]" />
+            <div className="absolute -right-25 -top-25 h-87.5 w-87.5 rounded-full bg-[#ffb69e]/20 blur-[100px]" />
 
-            <div className="relative flex min-h-[400px] items-center justify-center">
+            <div className="relative flex min-h-100 items-center justify-center">
 
               <div className="flex flex-col items-center gap-5 md:flex-row">
 
@@ -83,7 +83,7 @@ export default function Home() {
             Built for builders
           </p>
 
-          <h2 className="mt-5 max-w-3xl text-5xl font-bold tracking-[-0.05em] sm:text-6xl">
+          <h2 className="mt-5 max-w-3xl text-5xl font-bold tracking-tighter sm:text-6xl">
             Powerful backend.
             <br />
             Beautiful frontend.
@@ -151,7 +151,7 @@ function WorkflowBox({
   };
 
   return (
-    <div className="w-[230px] rounded-3xl border border-[#e7e0d7] bg-white p-6 shadow-[0_15px_40px_rgba(23,32,42,0.08)] transition hover:-translate-y-2">
+    <div className="w-57.5 rounded-3xl border border-[#e7e0d7] bg-white p-6 shadow-[0_15px_40px_rgba(23,32,42,0.08)] transition hover:-translate-y-2">
 
       <div
         className={`flex h-12 w-12 items-center justify-center rounded-2xl text-xl ${styles[color]}`}
@@ -192,7 +192,7 @@ function Feature({
   text: string;
 }) {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 transition hover:-translate-y-1 hover:bg-white/[0.07]">
+    <div className="rounded-3xl border border-white/10 bg-white/4 p-8 transition hover:-translate-y-1 hover:bg-white/[0.07]">
 
       <span className="text-sm text-[#ff8b72]">
         {number}

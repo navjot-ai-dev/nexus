@@ -11,11 +11,11 @@ export default function Hero() {
       {/* Soft background */}
       <div className="pointer-events-none absolute inset-0">
 
-        <div className="absolute left-[-150px] top-[150px] h-[400px] w-[400px] rounded-full bg-[#ffb69e]/15 blur-[120px]" />
+        <div className="absolute -left-37.5 top-37.5 h-100 w-100 rounded-full bg-[#ffb69e]/15 blur-[120px]" />
 
-        <div className="absolute right-[-100px] top-[180px] h-[450px] w-[450px] rounded-full bg-[#9be4da]/20 blur-[130px]" />
+        <div className="absolute -right-25 top-45 h-112.5 w-112.5 rounded-full bg-[#9be4da]/20 blur-[130px]" />
 
-        <div className="absolute bottom-[-150px] left-[40%] h-[400px] w-[500px] rounded-full bg-[#f7c99f]/15 blur-[130px]" />
+        <div className="absolute -bottom-37.5 left-[40%] h-100 w-125 rounded-full bg-[#f7c99f]/15 blur-[130px]" />
       </div>
 
       {/* tiny decorative dots */}
@@ -24,7 +24,7 @@ export default function Hero() {
       <div className="absolute left-[8%] top-[55%] h-1.5 w-1.5 rounded-full bg-[#f4b28f]" />
 
       {/* Main */}
-      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-130px)] max-w-[1420px] items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-130px)] max-w-355 items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
 
         {/* LEFT */}
         <div className="relative z-30 pb-20 lg:pb-0">
@@ -45,12 +45,12 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-[760px] text-[64px] font-bold leading-[0.94] tracking-[-0.065em] text-[#17202a] sm:text-[78px] lg:text-[92px] xl:text-[104px]"
+            className="max-w-190 text-[64px] font-bold leading-[0.94] tracking-tighter text-[#17202a] sm:text-[78px] lg:text-[92px] xl:text-[104px]"
           >
             Build workflows
             <br />
 
-            <span className="bg-gradient-to-r from-[#ff6246] via-[#f49d68] to-[#43bcae] bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-[#ff6246] via-[#f49d68] to-[#43bcae] bg-clip-text text-transparent">
               that think.
             </span>
           </motion.h1>
@@ -60,7 +60,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
-            className="mt-8 max-w-[610px] text-[17px] leading-8 text-[#667085]"
+            className="mt-8 max-w-152.5 text-[17px] leading-8 text-[#667085]"
           >
             Design powerful AI workflows visually. Connect services,
             automate complex processes, and watch every execution
@@ -104,7 +104,7 @@ export default function Hero() {
         </div>
 
         {/* RIGHT / 3D */}
-        <div className="relative h-[600px] lg:h-[680px]">
+        <div className="relative h-150 lg:h-170">
 
           {/* 3D */}
           <div className="absolute inset-0">

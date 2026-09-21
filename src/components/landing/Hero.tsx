@@ -137,7 +137,7 @@ export default function Hero() {
 
           {/* Connecting labels */}
           <div className="absolute right-[10%] top-[3%] hidden text-sm italic text-[#98a2b3] xl:block">
-            Drag&nbsp; → &nbsp;Connect&nbsp; → &nbsp;Automate
+            Drag → Connect → Automate
           </div>
         </div>
       </div>

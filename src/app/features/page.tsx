@@ -1,4 +1,5 @@
 import Navbar from "@/components/landing/Navbar";
+import StartBuildingButton from "@/components/landing/StartBuildingButton";
 import Link from "next/link";
 
 const features = [
@@ -376,12 +377,10 @@ export default function FeaturesPage() {
           systems your application depends on.
         </p>
 
-        <Link
-          href="/sign-up"
-          className="mt-9 inline-flex rounded-full bg-[#ff6749] px-8 py-4 text-sm font-bold text-white transition hover:scale-105"
+        <div className="mt-9 inline-flex rounded-full px-8 py-4 text-sm font-bold text-white transition hover:scale-105"
         >
-          Start building →
-        </Link>
+         <StartBuildingButton />
+        </div>
 
       </section>
 

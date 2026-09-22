@@ -1,4 +1,5 @@
 import Navbar from "@/components/landing/Navbar";
+import StartBuildingButton from "@/components/landing/StartBuildingButton";
 import Link from "next/link";
 
 const capabilities = [
@@ -55,12 +56,7 @@ export default function ProductPage() {
             </p>
 
             <div className="mt-9 flex flex-wrap gap-3">
-              <Link
-                href="/sign-up"
-                className="rounded-full bg-[#ff6749] px-7 py-3.5 text-sm font-bold text-white transition hover:scale-105"
-              >
-                Start building →
-              </Link>
+              <StartBuildingButton />
 
               <Link
                 href="/docs"

@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import workflows from "./routes/workflows.js";
+import workflows from "./routes/workflows";
 
 const app = new Hono();
 

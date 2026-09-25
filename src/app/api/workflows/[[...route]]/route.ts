@@ -1,5 +1,4 @@
 import { handle } from "hono/vercel";
-
 import app from "@/server";
 
 export const GET = handle(app);

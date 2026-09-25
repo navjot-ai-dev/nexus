@@ -1,8 +1,7 @@
 import { Hono } from "hono";
+import workflows from "./routes/workflows.js";
 
-import workflows from "./routes/workflows";
-
-const app = new Hono().basePath("/api");
+const app = new Hono();
 
 app.get("/health", (c) => {
   return c.json({

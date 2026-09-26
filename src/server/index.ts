@@ -1,9 +1,9 @@
 import { Hono } from "hono";
 import workflowsRoute from "./routes/workflows";
 
-const app = new Hono();
+const app = new Hono().basePath("/api/nexus");
 
-app.get("/health", (c) => {
+app.get("/ping", (c) => {
   return c.json({
     success: true,
     message: "NEXUS API is running 🚀",

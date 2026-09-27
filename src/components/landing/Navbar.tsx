@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import Link from "next/link";
+import StartBuildingButton from "./StartBuildingButton";
 
 const links = [
   {
@@ -73,13 +74,7 @@ export default function Navbar() {
             Sign in
           </Link>
 
-          <Link
-            href="/sign-up"
-            className="rounded-xl bg-[#ff6749] px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_25px_rgba(255,103,73,0.22)] transition hover:-translate-y-0.5 hover:bg-[#f4573a]"
-          >
-            Start building
-            <span className="ml-2">→</span>
-          </Link>
+          <StartBuildingButton />
         </div>
 
       </nav>

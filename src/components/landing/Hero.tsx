@@ -3,6 +3,8 @@
 import { motion } from "motion/react";
 import Scene from "./Scene";
 import WorkflowCard from "./WorkflowCard";
+import StartBuildingButton from "./StartBuildingButton";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -74,18 +76,15 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.25 }}
             className="mt-9 flex flex-wrap gap-4"
           >
-            <button className="rounded-2xl bg-[#ff6749] px-7 py-4 font-semibold text-white shadow-[0_15px_35px_rgba(255,103,73,0.25)] transition hover:-translate-y-1 hover:bg-[#f4573a]">
-              Start building
-              <span className="ml-3">→</span>
-            </button>
+            <StartBuildingButton />
 
-            <button className="flex items-center gap-3 rounded-2xl border border-[#ded8cf] bg-white/80 px-7 py-4 font-semibold text-[#17202a] shadow-sm backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white">
+            <Link href="/workflows"><button className="flex items-center gap-3 rounded-2xl border border-[#ded8cf] bg-white/80 px-7 py-4 font-semibold text-[#17202a] shadow-sm backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white">
               <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#17202a] text-[9px] text-white">
                 ▶
               </span>
 
               Explore workflows
-            </button>
+            </button></Link>
           </motion.div>
 
           {/* Stats */}

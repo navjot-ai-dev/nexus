@@ -15,19 +15,33 @@ import {
 
 import "@xyflow/react/dist/style.css";
 
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const initialNodes: Node[] = [];
 const initialEdges: Edge[] = [];
 
 export default function NewWorkflowPage() {
+  const router = useRouter();
+
   const [nodes, setNodes, onNodesChange] =
     useNodesState(initialNodes);
 
   const [edges, setEdges, onEdgesChange] =
     useEdgesState(initialEdges);
 
-  const reactFlowWrapper = useRef<HTMLDivElement>(null);
+  const [workflowName, setWorkflowName] =
+    useState("Untitled Workflow");
+
+  const [description, setDescription] =
+    useState("");
+
+  const [saving, setSaving] = useState(false);
+
+  const [error, setError] = useState("");
+
+  const reactFlowWrapper =
+    useRef<HTMLDivElement>(null);
 
   const onConnect = useCallback(
     (connection: Connection) => {
@@ -102,31 +116,128 @@ export default function NewWorkflowPage() {
     [setNodes],
   );
 
+  const saveWorkflow = async () => {
+    setError("");
+
+    if (!workflowName.trim()) {
+      setError("Please enter a workflow name.");
+      return;
+    }
+
+    if (nodes.length === 0) {
+      setError("Add at least one node to your workflow.");
+      return;
+    }
+
+    try {
+      setSaving(true);
+
+      const response = await fetch(
+        "/api/nexus/workflows",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: workflowName.trim(),
+            description: description.trim(),
+            nodes,
+            edges,
+            active: false,
+          }),
+        },
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          result.message ||
+            "Failed to save workflow.",
+        );
+      }
+
+      console.log(
+        "Workflow created:",
+        result.data,
+      );
+
+      router.push("/dashboard");
+    } catch (error) {
+      console.error(error);
+
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong.",
+      );
+    } finally {
+      setSaving(false);
+    }
+  };
+
   return (
     <div className="h-screen bg-[#fffdf9] text-[#17202a]">
       {/* HEADER */}
 
       <header className="flex h-[76px] items-center justify-between border-b border-[#e9e2d9] bg-white px-6">
-        <div>
-          <h1 className="text-xl font-bold tracking-[-0.03em]">
-            New Workflow
-          </h1>
+        <div className="flex items-center gap-4">
+          <div>
+            <h1 className="text-xl font-bold tracking-[-0.03em]">
+              New Workflow
+            </h1>
 
-          <p className="text-sm text-[#9aa3b2]">
-            Build your automation visually
-          </p>
+            <p className="text-sm text-[#9aa3b2]">
+              Build your automation visually
+            </p>
+          </div>
+
+          {/* WORKFLOW NAME */}
+
+          <input
+            value={workflowName}
+            onChange={(event) =>
+              setWorkflowName(event.target.value)
+            }
+            className="ml-4 w-[260px] rounded-xl border border-[#e9e2d9] bg-[#fffdf9] px-4 py-2.5 text-sm outline-none transition focus:border-[#ff6749]"
+            placeholder="Workflow name"
+          />
         </div>
 
         <div className="flex items-center gap-3">
-          <button className="rounded-xl border border-[#e9e2d9] px-5 py-2.5 text-sm font-medium text-[#667085] transition hover:bg-[#fff0eb]">
+          <button
+            onClick={() => router.push("/dashboard")}
+            className="rounded-xl border border-[#e9e2d9] px-5 py-2.5 text-sm font-medium text-[#667085] transition hover:bg-[#fff0eb]"
+          >
             Cancel
           </button>
 
-          <button className="rounded-xl bg-[#ff6749] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_8px_25px_rgba(255,103,73,0.22)] transition hover:-translate-y-0.5 hover:bg-[#f4573a]">
-            Save Workflow
+          <button
+            onClick={saveWorkflow}
+            disabled={saving}
+            className="rounded-xl bg-[#ff6749] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_8px_25px_rgba(255,103,73,0.22)] transition hover:-translate-y-0.5 hover:bg-[#f4573a] disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {saving
+              ? "Saving..."
+              : "Save Workflow"}
+
+            {!saving && (
+              <span className="ml-2">
+                →
+              </span>
+            )}
           </button>
         </div>
       </header>
+
+      {/* ERROR */}
+
+      {error && (
+        <div className="absolute left-1/2 top-[92px] z-50 -translate-x-1/2 rounded-xl border border-red-200 bg-red-50 px-5 py-3 text-sm text-red-600 shadow-lg">
+          {error}
+        </div>
+      )}
 
       <div className="flex h-[calc(100vh-76px)]">
         {/* SIDEBAR */}
@@ -165,6 +276,24 @@ export default function NewWorkflowPage() {
               onDragStart={onDragStart}
             />
           </div>
+
+          {/* DESCRIPTION */}
+
+          <div className="mt-8">
+            <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.15em] text-[#9aa3b2]">
+              Description
+            </label>
+
+            <textarea
+              value={description}
+              onChange={(event) =>
+                setDescription(event.target.value)
+              }
+              placeholder="What does this workflow do?"
+              rows={4}
+              className="w-full resize-none rounded-xl border border-[#e9e2d9] bg-[#fffdf9] p-3 text-sm outline-none transition focus:border-[#ff6749]"
+            />
+          </div>
         </aside>
 
         {/* CANVAS */}
@@ -184,9 +313,7 @@ export default function NewWorkflowPage() {
             fitView
           >
             <Background gap={20} />
-
             <Controls />
-
             <MiniMap />
           </ReactFlow>
         </main>
@@ -253,7 +380,8 @@ function getNodeStyle(type: string) {
     borderRadius: "16px",
     padding: "16px",
     width: 190,
-    boxShadow: "0 10px 30px rgba(30,41,59,0.08)",
+    boxShadow:
+      "0 10px 30px rgba(30,41,59,0.08)",
   };
 
   switch (type) {

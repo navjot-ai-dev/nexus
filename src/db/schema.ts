@@ -1,3 +1,4 @@
+
 import { relations } from "drizzle-orm";
 
 import {
@@ -20,11 +21,15 @@ export const user = pgTable("user", {
 
   email: text("email").notNull().unique(),
 
-  emailVerified: boolean("email_verified").default(false).notNull(),
+  emailVerified: boolean("email_verified")
+    .default(false)
+    .notNull(),
 
   image: text("image"),
 
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  createdAt: timestamp("created_at")
+    .defaultNow()
+    .notNull(),
 
   updatedAt: timestamp("updated_at")
     .defaultNow()
@@ -45,7 +50,9 @@ export const session = pgTable(
 
     token: text("token").notNull().unique(),
 
-    createdAt: timestamp("created_at").defaultNow().notNull(),
+    createdAt: timestamp("created_at")
+      .defaultNow()
+      .notNull(),
 
     updatedAt: timestamp("updated_at")
       .$onUpdate(() => new Date())
@@ -92,15 +99,21 @@ export const account = pgTable(
 
     idToken: text("id_token"),
 
-    accessTokenExpiresAt: timestamp("access_token_expires_at"),
+    accessTokenExpiresAt: timestamp(
+      "access_token_expires_at",
+    ),
 
-    refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
+    refreshTokenExpiresAt: timestamp(
+      "refresh_token_expires_at",
+    ),
 
     scope: text("scope"),
 
     password: text("password"),
 
-    createdAt: timestamp("created_at").defaultNow().notNull(),
+    createdAt: timestamp("created_at")
+      .defaultNow()
+      .notNull(),
 
     updatedAt: timestamp("updated_at")
       .$onUpdate(() => new Date())
@@ -127,7 +140,9 @@ export const verification = pgTable(
 
     expiresAt: timestamp("expires_at").notNull(),
 
-    createdAt: timestamp("created_at").defaultNow().notNull(),
+    createdAt: timestamp("created_at")
+      .defaultNow()
+      .notNull(),
 
     updatedAt: timestamp("updated_at")
       .defaultNow()
@@ -135,7 +150,9 @@ export const verification = pgTable(
   },
 
   (table) => [
-    index("verification_identifier_idx").on(table.identifier),
+    index("verification_identifier_idx").on(
+      table.identifier,
+    ),
   ],
 );
 
@@ -159,22 +176,30 @@ export const workflows = pgTable(
       }),
 
     /*
-      React Flow nodes will be stored here.
+      React Flow nodes
     */
-    nodes: jsonb("nodes").notNull().default([]),
+    nodes: jsonb("nodes")
+      .notNull()
+      .default([]),
 
     /*
-      React Flow edges/connections will be stored here.
+      React Flow edges
     */
-    edges: jsonb("edges").notNull().default([]),
+    edges: jsonb("edges")
+      .notNull()
+      .default([]),
 
     /*
-      false = workflow is disabled
-      true  = workflow is active
+      false = disabled
+      true  = active
     */
-    active: boolean("active").notNull().default(false),
+    active: boolean("active")
+      .notNull()
+      .default(false),
 
-    createdAt: timestamp("created_at").defaultNow().notNull(),
+    createdAt: timestamp("created_at")
+      .defaultNow()
+      .notNull(),
 
     updatedAt: timestamp("updated_at")
       .defaultNow()
@@ -183,7 +208,101 @@ export const workflows = pgTable(
   },
 
   (table) => [
-    index("workflow_userId_idx").on(table.userId),
+    index("workflow_userId_idx").on(
+      table.userId,
+    ),
+  ],
+);
+
+/* =========================================================
+   WORKFLOW EXECUTIONS
+========================================================= */
+
+export const workflowExecutions = pgTable(
+  "workflow_execution",
+  {
+    /*
+      Unique execution ID
+    */
+    id: text("id").primaryKey(),
+
+    /*
+      Workflow that was executed
+    */
+    workflowId: text("workflow_id")
+      .notNull()
+      .references(() => workflows.id, {
+        onDelete: "cascade",
+      }),
+
+    /*
+      User who owns the workflow
+    */
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, {
+        onDelete: "cascade",
+      }),
+
+    /*
+      pending
+      running
+      completed
+      failed
+    */
+    status: text("status")
+      .notNull()
+      .default("pending"),
+
+    /*
+      Data entering the workflow
+    */
+    input: jsonb("input")
+      .notNull()
+      .default({}),
+
+    /*
+      Final workflow result
+    */
+    output: jsonb("output")
+      .notNull()
+      .default({}),
+
+    /*
+      Error message if execution fails
+    */
+    error: text("error"),
+
+    /*
+      Execution start time
+    */
+    startedAt: timestamp("started_at"),
+
+    /*
+      Execution completion time
+    */
+    completedAt: timestamp("completed_at"),
+
+    /*
+      Execution creation time
+    */
+    createdAt: timestamp("created_at")
+      .defaultNow()
+      .notNull(),
+  },
+
+  (table) => [
+    index(
+      "workflow_execution_workflowId_idx",
+    ).on(table.workflowId),
+
+    index(
+      "workflow_execution_userId_idx",
+    ).on(table.userId),
+
+    index(
+      "workflow_execution_status_idx",
+    ).on(table.status),
   ],
 );
 
@@ -191,37 +310,50 @@ export const workflows = pgTable(
    USER RELATIONS
 ========================================================= */
 
-export const userRelations = relations(user, ({ many }) => ({
-  sessions: many(session),
+export const userRelations = relations(
+  user,
+  ({ many }) => ({
+    sessions: many(session),
 
-  accounts: many(account),
+    accounts: many(account),
 
-  workflows: many(workflows),
-}));
+    workflows: many(workflows),
+
+    workflowExecutions: many(
+      workflowExecutions,
+    ),
+  }),
+);
 
 /* =========================================================
    SESSION RELATIONS
 ========================================================= */
 
-export const sessionRelations = relations(session, ({ one }) => ({
-  user: one(user, {
-    fields: [session.userId],
+export const sessionRelations = relations(
+  session,
+  ({ one }) => ({
+    user: one(user, {
+      fields: [session.userId],
 
-    references: [user.id],
+      references: [user.id],
+    }),
   }),
-}));
+);
 
 /* =========================================================
    ACCOUNT RELATIONS
 ========================================================= */
 
-export const accountRelations = relations(account, ({ one }) => ({
-  user: one(user, {
-    fields: [account.userId],
+export const accountRelations = relations(
+  account,
+  ({ one }) => ({
+    user: one(user, {
+      fields: [account.userId],
 
-    references: [user.id],
+      references: [user.id],
+    }),
   }),
-}));
+);
 
 /* =========================================================
    WORKFLOW RELATIONS
@@ -229,11 +361,42 @@ export const accountRelations = relations(account, ({ one }) => ({
 
 export const workflowRelations = relations(
   workflows,
-  ({ one }) => ({
+  ({ one, many }) => ({
     user: one(user, {
       fields: [workflows.userId],
 
       references: [user.id],
     }),
+
+    executions: many(
+      workflowExecutions,
+    ),
   }),
 );
+
+/* =========================================================
+   WORKFLOW EXECUTION RELATIONS
+========================================================= */
+
+export const workflowExecutionRelations =
+  relations(
+    workflowExecutions,
+    ({ one }) => ({
+      workflow: one(workflows, {
+        fields: [
+          workflowExecutions.workflowId,
+        ],
+
+        references: [workflows.id],
+      }),
+
+      user: one(user, {
+        fields: [
+          workflowExecutions.userId,
+        ],
+
+        references: [user.id],
+      }),
+    }),
+  );
+

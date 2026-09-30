@@ -98,9 +98,11 @@ export default function NewWorkflowPage() {
         y: event.clientY - bounds.top,
       };
 
+      // IMPORTANT:
+      // Store the real node type instead of "default".
       const newNode: Node = {
         id: `${type}-${Date.now()}`,
-        type: "default",
+        type: type,
         position,
         data: {
           label: getNodeLabel(type),

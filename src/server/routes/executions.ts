@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { and, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 
 import { db } from "@/db";
 import {
@@ -10,11 +10,15 @@ import { auth } from "@/lib/auth";
 
 const executionsRoute = new Hono();
 
-executionsRoute.post(
-  "/:id/execute",
+/**
+ * GET /workflows/:id/executions
+ *
+ * Returns execution history for a workflow.
+ */
+executionsRoute.get(
+  "/:id/executions",
   async (c) => {
     try {
-      // 1. Check authentication
       const session = await auth.api.getSession({
         headers: c.req.raw.headers,
       });
@@ -31,7 +35,98 @@ executionsRoute.post(
 
       const workflowId = c.req.param("id");
 
-      // 2. Find workflow belonging to current user
+      // Make sure this workflow belongs to
+      // the currently logged-in user.
+      const workflow = await db
+        .select()
+        .from(workflows)
+        .where(
+          and(
+            eq(workflows.id, workflowId),
+            eq(
+              workflows.userId,
+              session.user.id,
+            ),
+          ),
+        )
+        .limit(1);
+
+      if (!workflow.length) {
+        return c.json(
+          {
+            success: false,
+            message: "Workflow not found",
+          },
+          404,
+        );
+      }
+
+      const executions = await db
+        .select()
+        .from(workflowExecutions)
+        .where(
+          and(
+            eq(
+              workflowExecutions.workflowId,
+              workflowId,
+            ),
+            eq(
+              workflowExecutions.userId,
+              session.user.id,
+            ),
+          ),
+        )
+        .orderBy(
+          desc(workflowExecutions.createdAt),
+        );
+
+      return c.json({
+        success: true,
+        data: executions,
+      });
+    } catch (error) {
+      console.error(
+        "GET /workflows/:id/executions error:",
+        error,
+      );
+
+      return c.json(
+        {
+          success: false,
+          message:
+            "Failed to fetch execution history",
+        },
+        500,
+      );
+    }
+  },
+);
+
+/**
+ * POST /workflows/:id/execute
+ *
+ * Executes a workflow.
+ */
+executionsRoute.post(
+  "/:id/execute",
+  async (c) => {
+    try {
+      const session = await auth.api.getSession({
+        headers: c.req.raw.headers,
+      });
+
+      if (!session) {
+        return c.json(
+          {
+            success: false,
+            message: "Unauthorized",
+          },
+          401,
+        );
+      }
+
+      const workflowId = c.req.param("id");
+
       const result = await db
         .select()
         .from(workflows)
@@ -58,7 +153,6 @@ executionsRoute.post(
 
       const workflow = result[0];
 
-      // 3. Check workflow is active
       if (!workflow.active) {
         return c.json(
           {
@@ -70,7 +164,6 @@ executionsRoute.post(
         );
       }
 
-      // 4. Create execution record
       const executionId = crypto.randomUUID();
 
       const execution = await db
@@ -87,12 +180,15 @@ executionsRoute.post(
         .returning();
 
       try {
-        // 5. Execute nodes
-        const nodes = Array.isArray(workflow.nodes)
+        const nodes = Array.isArray(
+          workflow.nodes,
+        )
           ? workflow.nodes
           : [];
 
-        const edges = Array.isArray(workflow.edges)
+        const edges = Array.isArray(
+          workflow.edges,
+        )
           ? workflow.edges
           : [];
 
@@ -104,8 +200,8 @@ executionsRoute.post(
           );
 
           const nodeType =
-            node.data?.type ||
             node.type ||
+            node.data?.type ||
             "default";
 
           let output: unknown;
@@ -153,7 +249,6 @@ executionsRoute.post(
           });
         }
 
-        // 6. Save successful execution
         const finalOutput = {
           nodes: executionResults,
           connections: edges.length,
@@ -187,7 +282,6 @@ executionsRoute.post(
           executionError,
         );
 
-        // 7. Save failed execution
         await db
           .update(workflowExecutions)
           .set({

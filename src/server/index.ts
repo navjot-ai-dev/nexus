@@ -12,11 +12,11 @@ app.get("/ping", (c) => {
   });
 });
 
+// Mount executionsRoute first so /workflows/stats does not get captured by /workflows/:id
+app.route("/workflows", executionsRoute);
 app.route("/workflows", workflowsRoute);
 
-app.route(
-  "/workflows",
-  executionsRoute,
-);
+// Also expose /stats at root of /api/nexus/stats for clean dashboard consumption
+app.route("/stats", executionsRoute);
 
 export default app;

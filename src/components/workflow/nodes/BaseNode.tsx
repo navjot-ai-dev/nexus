@@ -2,12 +2,11 @@
 
 import React, { memo } from "react";
 import { Handle, Position } from "@xyflow/react";
-import type { NodeType } from "@/types/workflow";
 
 interface BaseNodeProps {
   id: string;
   selected?: boolean;
-  type: NodeType;
+  type?: string;
   title: string;
   subtitle?: string;
   badge?: string;
@@ -23,7 +22,6 @@ interface BaseNodeProps {
 
 export const BaseNode = memo(function BaseNode({
   selected,
-  type,
   title,
   subtitle,
   badge,

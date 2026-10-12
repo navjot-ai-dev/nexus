@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   X,
   Trash2,
@@ -10,7 +10,6 @@ import {
   Globe,
   Database,
   Webhook,
-  HelpCircle,
 } from "lucide-react";
 import type {
   NexusNode,

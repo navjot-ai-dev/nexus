@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   X,
   CheckCircle2,
@@ -43,23 +43,11 @@ export function ExecutionHistoryDrawer({
 }: ExecutionHistoryDrawerProps) {
   const [executions, setExecutions] = useState<ExecutionRecord[]>([]);
   const [loading, setLoading] = useState(false);
-  const [activeExecution, setActiveExecution] = useState<ExecutionRecord | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(selectedExecutionId || null);
   const [expandedNodes, setExpandedNodes] = useState<Record<string, boolean>>({});
 
-  useEffect(() => {
-    if (isOpen && workflowId) {
-      loadHistory();
-    }
-  }, [isOpen, workflowId]);
-
-  useEffect(() => {
-    if (selectedExecutionId && executions.length > 0) {
-      const match = executions.find((e) => e.id === selectedExecutionId);
-      if (match) setActiveExecution(match);
-    }
-  }, [selectedExecutionId, executions]);
-
-  const loadHistory = async () => {
+  const loadHistory = useCallback(async () => {
+    if (!workflowId) return;
     try {
       setLoading(true);
       const res = await fetch(`/api/nexus/workflows/${workflowId}/executions`, {
@@ -68,19 +56,26 @@ export function ExecutionHistoryDrawer({
       const data = await res.json();
       if (res.ok && data.success) {
         setExecutions(data.data || []);
-        if (selectedExecutionId) {
-          const match = (data.data || []).find((e: any) => e.id === selectedExecutionId);
-          if (match) setActiveExecution(match);
-        } else if (data.data && data.data.length > 0 && !activeExecution) {
-          setActiveExecution(data.data[0]);
-        }
       }
     } catch (err) {
       console.error("Failed to load executions history", err);
     } finally {
       setLoading(false);
     }
-  };
+  }, [workflowId]);
+
+  useEffect(() => {
+    if (isOpen) {
+      loadHistory();
+    }
+  }, [isOpen, loadHistory]);
+
+  // Derive the active execution using the selected id or fallback to the first execution
+  const activeExecution =
+    (selectedId ? executions.find((e) => e.id === selectedId) : null) ||
+    (selectedExecutionId ? executions.find((e) => e.id === selectedExecutionId) : null) ||
+    executions[0] ||
+    null;
 
   const toggleNodeExpansion = (nodeId: string) => {
     setExpandedNodes((prev) => ({
@@ -139,7 +134,7 @@ export function ExecutionHistoryDrawer({
             return (
               <button
                 key={exec.id}
-                onClick={() => setActiveExecution(exec)}
+                onClick={() => setSelectedId(exec.id)}
                 className={`w-full rounded-xl p-3 text-left transition-all ${
                   isSelected
                     ? "border border-[#ff6749] bg-white shadow-sm"

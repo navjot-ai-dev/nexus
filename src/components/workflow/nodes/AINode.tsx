@@ -20,7 +20,6 @@ export const AINode = memo(function AINode({
     <BaseNode
       id={id}
       selected={selected}
-      type="ai"
       title={nodeData.label || "AI Processor"}
       subtitle={config.provider || "Gemini"}
       badge="LLM"
@@ -38,7 +37,7 @@ export const AINode = memo(function AINode({
           <span>temp: {config.temperature ?? 0.7}</span>
         </div>
         <p className="truncate text-[11px] text-[#8a94a6] italic">
-          "{prompt}"
+          &ldquo;{prompt}&rdquo;
         </p>
       </div>
     </BaseNode>

@@ -6,12 +6,8 @@ import {
   ArrowLeft,
   Play,
   Save,
-  CheckCircle2,
-  AlertCircle,
   History,
-  Power,
   RotateCw,
-  Sparkles,
   Maximize2,
 } from "lucide-react";
 
@@ -39,7 +35,6 @@ export function WorkflowToolbar({
   isExecuting,
   hasUnsavedChanges = false,
   onNameChange,
-  onDescriptionChange,
   onToggleActive,
   onSave,
   onExecute,

@@ -17,7 +17,6 @@ import "@xyflow/react/dist/style.css";
 
 import { workflowNodeTypes } from "./nodes";
 import type { NexusNode, NodeType } from "@/types/workflow";
-import { getNodeDefaultTitle, getNodeDefaultDescription } from "@/schemas/workflow";
 
 interface WorkflowCanvasProps {
   nodes: Node[];

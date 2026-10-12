@@ -14,7 +14,7 @@ const executionsRoute = new Hono();
  * GET /stats
  * Returns overall workflow & execution statistics for the dashboard.
  */
-executionsRoute.get("/stats", async (c) => {
+const getStatsHandler = async (c: any) => {
   try {
     const session = await auth.api.getSession({
       headers: c.req.raw.headers,
@@ -77,7 +77,10 @@ executionsRoute.get("/stats", async (c) => {
       500,
     );
   }
-});
+};
+
+executionsRoute.get("/stats", getStatsHandler);
+executionsRoute.get("/", getStatsHandler);
 
 /**
  * GET /:id/executions

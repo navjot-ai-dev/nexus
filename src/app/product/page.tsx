@@ -1,5 +1,11 @@
+"use client";
+
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "@/components/landing/Navbar";
 import StartBuildingButton from "@/components/landing/StartBuildingButton";
+import ScrollProgressBar from "@/components/landing/ScrollProgressBar";
 import Link from "next/link";
 
 const capabilities = [
@@ -30,8 +36,74 @@ const capabilities = [
 ];
 
 export default function ProductPage() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !containerRef.current) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // 1. Capabilities items stagger on scroll
+      gsap.fromTo(
+        ".capability-item",
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.14,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".capabilities-section",
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        },
+      );
+
+      // 2. Lifecycle steps stagger on scroll
+      gsap.fromTo(
+        ".lifecycle-step-item",
+        { opacity: 0, x: 25 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.65,
+          stagger: 0.15,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".lifecycle-steps-box",
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        },
+      );
+
+      // 3. CTA Box zoom on scroll
+      gsap.fromTo(
+        ".product-cta-box",
+        { opacity: 0, scale: 0.93, y: 30 },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".product-cta-box",
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
+        },
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <main className="min-h-screen bg-[#fffdf9] text-[#17202a]">
+    <div ref={containerRef} className="min-h-screen bg-[#fffdf9] text-[#17202a]">
+      <ScrollProgressBar />
       {/* Navbar */}
       <Navbar />
 
@@ -76,9 +148,7 @@ export default function ProductPage() {
                     Workflow
                   </p>
 
-                  <h3 className="mt-1 font-bold">
-                    AI Content Pipeline
-                  </h3>
+                  <h3 className="mt-1 font-bold">AI Content Pipeline</h3>
                 </div>
 
                 <span className="rounded-full bg-green-50 px-3 py-1 text-xs font-bold text-green-600">
@@ -87,31 +157,13 @@ export default function ProductPage() {
               </div>
 
               <div className="space-y-3">
-                <WorkflowNode
-                  label="Webhook"
-                  description="Receive request"
-                />
-
+                <WorkflowNode label="Webhook" description="Receive request" />
                 <Connector />
-
-                <WorkflowNode
-                  label="AI Processor"
-                  description="Generate content"
-                />
-
+                <WorkflowNode label="AI Processor" description="Generate content" />
                 <Connector />
-
-                <WorkflowNode
-                  label="Database"
-                  description="Save result"
-                />
-
+                <WorkflowNode label="Database" description="Save result" />
                 <Connector />
-
-                <WorkflowNode
-                  label="Response"
-                  description="Return result"
-                />
+                <WorkflowNode label="Response" description="Return result" />
               </div>
             </div>
           </div>
@@ -119,7 +171,7 @@ export default function ProductPage() {
       </section>
 
       {/* Capabilities */}
-      <section className="border-y border-black/5 bg-white">
+      <section className="capabilities-section border-y border-black/5 bg-white">
         <div className="mx-auto max-w-7xl px-6 py-24">
           <div className="max-w-2xl">
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#ff6749]">
@@ -135,15 +187,13 @@ export default function ProductPage() {
             {capabilities.map((item) => (
               <div
                 key={item.number}
-                className="grid gap-6 py-10 md:grid-cols-[100px_280px_1fr] md:items-center"
+                className="capability-item grid gap-6 py-10 md:grid-cols-[100px_280px_1fr] md:items-center"
               >
                 <span className="font-mono text-sm font-bold text-[#ff6749]">
                   {item.number}
                 </span>
 
-                <h3 className="text-2xl font-bold">
-                  {item.title}
-                </h3>
+                <h3 className="text-2xl font-bold">{item.title}</h3>
 
                 <p className="max-w-xl leading-7 text-gray-500">
                   {item.description}
@@ -174,7 +224,7 @@ export default function ProductPage() {
             </p>
           </div>
 
-          <div className="space-y-8">
+          <div className="lifecycle-steps-box space-y-8">
             <Lifecycle
               number="01"
               title="Trigger"
@@ -203,7 +253,7 @@ export default function ProductPage() {
       </section>
 
       {/* CTA */}
-      <section className="mx-6 mb-10 overflow-hidden rounded-[40px] bg-[#17202a] px-6 py-24 text-center text-white">
+      <section className="product-cta-box mx-6 mb-10 overflow-hidden rounded-[40px] bg-[#17202a] px-6 py-24 text-center text-white shadow-2xl">
         <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#ff6749]">
           NEXUS
         </p>
@@ -224,11 +274,9 @@ export default function ProductPage() {
           Start building →
         </Link>
       </section>
-    </main>
+    </div>
   );
 }
-
-/* Workflow node */
 
 function WorkflowNode({
   label,
@@ -241,9 +289,7 @@ function WorkflowNode({
     <div className="flex items-center justify-between rounded-2xl border border-black/5 bg-[#fffdf9] px-5 py-4">
       <div>
         <p className="font-bold">{label}</p>
-        <p className="mt-1 text-xs text-gray-400">
-          {description}
-        </p>
+        <p className="mt-1 text-xs text-gray-400">{description}</p>
       </div>
 
       <span className="h-2.5 w-2.5 rounded-full bg-[#ff6749]" />
@@ -251,15 +297,9 @@ function WorkflowNode({
   );
 }
 
-/* Connector */
-
 function Connector() {
-  return (
-    <div className="ml-8 h-5 border-l border-dashed border-gray-300" />
-  );
+  return <div className="ml-8 h-5 border-l border-dashed border-gray-300" />;
 }
-
-/* Lifecycle */
 
 function Lifecycle({
   number,
@@ -271,14 +311,13 @@ function Lifecycle({
   text: string;
 }) {
   return (
-    <div className="flex gap-5 border-b border-black/10 pb-7">
+    <div className="lifecycle-step-item flex gap-5 border-b border-black/10 pb-7">
       <span className="font-mono text-sm font-bold text-[#ff6749]">
         {number}
       </span>
 
       <div>
         <h3 className="text-xl font-bold">{title}</h3>
-
         <p className="mt-2 text-gray-500">{text}</p>
       </div>
     </div>

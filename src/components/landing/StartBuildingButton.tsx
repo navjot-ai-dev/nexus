@@ -10,7 +10,7 @@ export default function StartBuildingButton({ className = "" }: { className?: st
   if (isPending) {
     return (
       <span
-        className={`inline-flex items-center gap-2 rounded-xl bg-[#ff6749] px-6 py-3.5 text-sm font-bold text-white shadow-[0_8px_25px_rgba(255,103,73,0.22)] opacity-80 ${className}`}
+        className={`inline-flex items-center gap-2 rounded-xl bg-slate-950 px-6 py-3.5 text-sm font-bold text-white shadow-md opacity-80 ${className}`}
       >
         <span>Start Building</span>
         <ArrowRight className="h-4 w-4" />
@@ -21,10 +21,10 @@ export default function StartBuildingButton({ className = "" }: { className?: st
   return (
     <Link
       href={session ? "/dashboard" : "/sign-in"}
-      className={`inline-flex items-center gap-2 rounded-xl bg-[#ff6749] px-6 py-3.5 text-sm font-bold text-white shadow-[0_8px_25px_rgba(255,103,73,0.22)] transition hover:-translate-y-0.5 hover:bg-[#f4573a] hover:shadow-[0_12px_30px_rgba(255,103,73,0.3)] ${className}`}
+      className={`inline-flex items-center gap-2 rounded-xl bg-slate-950 px-6 py-3.5 text-sm font-bold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-900 hover:shadow-lg active:translate-y-0 ring-1 ring-white/10 ${className}`}
     >
       <span>Start Building</span>
-      <ArrowRight className="h-4 w-4" />
+      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
     </Link>
   );
 }

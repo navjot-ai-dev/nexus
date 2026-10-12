@@ -25,25 +25,25 @@ export default function WorkflowCard({
         repeat: Infinity,
         ease: "easeInOut",
       }}
-      className={`absolute z-20 w-47.5 rounded-2xl border border-white/80 bg-white/85 p-4 shadow-[0_20px_50px_rgba(31,41,55,0.12)] backdrop-blur-xl ${className}`}
+      className={`absolute z-20 w-52 rounded-2xl border border-slate-200/90 bg-white/95 p-4 shadow-[0_16px_36px_rgba(15,23,42,0.08)] backdrop-blur-xl ${className}`}
     >
       <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#fff1eb] text-lg">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-base shadow-2xs">
           {icon}
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold text-[#17202A]">
+          <h3 className="text-xs font-bold text-slate-900 tracking-tight">
             {title}
           </h3>
 
-          <p className="mt-0.5 text-[11px] text-[#98A2B3]">
+          <p className="mt-0.5 text-[11px] text-slate-500">
             {description}
           </p>
         </div>
       </div>
 
-      <div className="mt-3 h-1 overflow-hidden rounded-full bg-[#f2eee8]">
+      <div className="mt-3.5 h-1 overflow-hidden rounded-full bg-slate-100">
         <motion.div
           animate={{ x: ["-100%", "100%"] }}
           transition={{
@@ -51,7 +51,7 @@ export default function WorkflowCard({
             repeat: Infinity,
             ease: "linear",
           }}
-          className="h-full w-1/2 rounded-full bg-[#ff8b6a]"
+          className="h-full w-1/2 rounded-full bg-gradient-to-r from-indigo-500 to-sky-500"
         />
       </div>
     </motion.div>

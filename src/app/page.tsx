@@ -13,18 +13,10 @@ import {
   Sparkles,
   Database,
   Globe,
-  ArrowRight,
   Shield,
   Activity,
-  Layers,
-  Terminal,
   Cpu,
   GitBranch,
-  Play,
-  CheckCircle2,
-  RotateCw,
-  Clock,
-  Zap,
 } from "lucide-react";
 
 export default function Home() {
@@ -248,7 +240,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative min-h-screen bg-[#fffdf9] text-[#17202a]">
+    <div ref={containerRef} className="relative min-h-screen bg-[#f8fafc] text-slate-900 selection:bg-slate-900 selection:text-white">
       {/* Top GSAP Scroll Progress Bar */}
       <ScrollProgressBar />
 
@@ -259,44 +251,44 @@ export default function Home() {
       <Hero />
 
       {/* PRODUCT INTERACTIVE FLOW */}
-      <section id="product" className="border-t border-[#eee8df] bg-[#fffdf9] px-6 py-28">
+      <section id="product" className="border-t border-slate-200/80 bg-white px-6 py-28 relative">
         <div className="mx-auto max-w-7xl">
           <div className="product-header max-w-2xl">
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#ff6749]">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-indigo-600 font-mono">
               Infinite Extensibility
             </p>
-            <h2 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl text-[#17202a]">
+            <h2 className="mt-3.5 text-4xl font-extrabold tracking-tight sm:text-5xl text-slate-950">
               One visual canvas.
               <br />
               Enterprise reliability.
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-[#667085]">
+            <p className="mt-4 text-base leading-relaxed text-slate-600">
               Compose webhooks, LLMs, REST APIs, and database transactions into directed acyclic graphs.
               Every node is type-safe, observable, and isolated with SSRF protection.
             </p>
           </div>
 
           {/* Interactive Workflow Diagram with Active Tracer */}
-          <div className="product-diagram-box relative mt-16 overflow-hidden rounded-[36px] border border-[#e8e1d8] bg-[#f8f5ef] p-8 md:p-12 shadow-[0_24px_60px_rgba(23,32,42,0.06)]">
-            <div className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-[#ffb69e]/20 blur-[100px]" />
-            <div className="pointer-events-none absolute -left-20 -bottom-20 h-80 w-80 rounded-full bg-[#9be4da]/20 blur-[100px]" />
+          <div className="product-diagram-box relative mt-16 overflow-hidden rounded-[36px] border border-slate-200/90 bg-[#f8fafc] p-8 md:p-12 shadow-[0_20px_50px_rgba(15,23,42,0.04)]">
+            <div className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-indigo-500/8 blur-[100px]" />
+            <div className="pointer-events-none absolute -left-20 -bottom-20 h-80 w-80 rounded-full bg-sky-500/8 blur-[100px]" />
 
             {/* Live Pipeline Active Status Bar */}
-            <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-[#e8e1d8] pb-6">
+            <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 pb-6">
               <div className="flex items-center gap-3">
                 <span className="relative flex h-3 w-3">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ff6749] opacity-75" />
-                  <span className="relative inline-flex h-3 w-3 rounded-full bg-[#ff6749]" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-500 opacity-75" />
+                  <span className="relative inline-flex h-3 w-3 rounded-full bg-indigo-600" />
                 </span>
-                <span className="font-mono text-xs font-bold text-[#17202a]">
+                <span className="font-mono text-xs font-bold text-slate-900">
                   Live Visual Simulation
                 </span>
-                <span className="rounded-full bg-[#eef8f6] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#2a9d8f]">
+                <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 font-mono text-[10px] font-bold text-indigo-700 border border-indigo-200/60">
                   Step {activeStep + 1} of 4 Active
                 </span>
               </div>
 
-              <div className="hidden font-mono text-[11px] text-[#8a94a6] sm:block">
+              <div className="hidden font-mono text-[11px] text-slate-500 sm:block">
                 Topological execution order: Trigger → AI → API → Warehouse
               </div>
             </div>
@@ -304,46 +296,46 @@ export default function Home() {
             <div className="relative flex flex-col items-center justify-center gap-6 lg:flex-row">
               <InteractiveDiagramCard
                 badge="TRIGGER"
-                badgeColor="bg-[#fff0eb] text-[#ff6749]"
+                badgeColor="bg-amber-50 text-amber-700 border border-amber-200/60"
                 title="Webhook Listener"
                 detail="POST /api/v1/events"
-                icon={<Webhook className="h-5 w-5 text-[#ff6749]" />}
+                icon={<Webhook className="h-5 w-5 text-amber-600" />}
                 isActive={activeStep === 0}
-                activeColor="ring-2 ring-[#ff6749] shadow-lg shadow-[#ff6749]/20"
+                activeColor="ring-2 ring-amber-500 shadow-lg shadow-amber-500/10"
                 statusText="Payload Ingested (200)"
               />
 
               <FlowConnector
                 label="JSON payload"
                 isFlowing={activeStep >= 1}
-                color="#ff6749"
+                color="#f59e0b"
               />
 
               <InteractiveDiagramCard
                 badge="AI MODEL"
-                badgeColor="bg-[#eef8f6] text-[#2a9d8f]"
+                badgeColor="bg-indigo-50 text-indigo-700 border border-indigo-200/60"
                 title="Gemini 1.5 Flash"
                 detail="Extract intent & sentiment"
-                icon={<Sparkles className="h-5 w-5 text-[#2a9d8f]" />}
+                icon={<Sparkles className="h-5 w-5 text-indigo-600" />}
                 isActive={activeStep === 1}
-                activeColor="ring-2 ring-[#2a9d8f] shadow-lg shadow-[#2a9d8f]/20"
+                activeColor="ring-2 ring-indigo-500 shadow-lg shadow-indigo-500/10"
                 statusText="Analyzed (78 tokens)"
               />
 
               <FlowConnector
                 label="Structured text"
                 isFlowing={activeStep >= 2}
-                color="#2a9d8f"
+                color="#6366f1"
               />
 
               <InteractiveDiagramCard
                 badge="API"
-                badgeColor="bg-[#eff8ff] text-[#0284c7]"
+                badgeColor="bg-sky-50 text-sky-700 border border-sky-200/60"
                 title="HTTP Dispatcher"
                 detail="Sync to CRM / Slack"
-                icon={<Globe className="h-5 w-5 text-[#0284c7]" />}
+                icon={<Globe className="h-5 w-5 text-sky-600" />}
                 isActive={activeStep === 2}
-                activeColor="ring-2 ring-[#0284c7] shadow-lg shadow-[#0284c7]/20"
+                activeColor="ring-2 ring-sky-500 shadow-lg shadow-sky-500/10"
                 statusText="Status 200 OK (85ms)"
               />
 
@@ -355,12 +347,12 @@ export default function Home() {
 
               <InteractiveDiagramCard
                 badge="STORAGE"
-                badgeColor="bg-[#f5f3ff] text-[#7c3aed]"
+                badgeColor="bg-purple-50 text-purple-700 border border-purple-200/60"
                 title="Database Store"
                 detail="INSERT INTO audit_logs"
-                icon={<Database className="h-5 w-5 text-[#7c3aed]" />}
+                icon={<Database className="h-5 w-5 text-purple-600" />}
                 isActive={activeStep === 3}
-                activeColor="ring-2 ring-[#7c3aed] shadow-lg shadow-[#7c3aed]/20"
+                activeColor="ring-2 ring-purple-500 shadow-lg shadow-purple-500/10"
                 statusText="1 row persisted"
               />
             </div>
@@ -368,40 +360,42 @@ export default function Home() {
         </div>
       </section>
 
-      {/* DEVELOPER FEATURES (DEEP NAVY) */}
-      <section id="features" className="bg-[#17202a] px-6 py-28 text-white">
-        <div className="mx-auto max-w-7xl">
+      {/* DEVELOPER FEATURES (OBSIDIAN DARK) */}
+      <section id="features" className="bg-[#090d16] px-6 py-28 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-pattern-dark opacity-30 pointer-events-none" />
+
+        <div className="relative mx-auto max-w-7xl">
           <div className="features-header flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#ff8b72]">
+              <p className="text-xs font-bold uppercase tracking-[0.25em] text-indigo-400 font-mono">
                 Architected for Engineers
               </p>
-              <h2 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
+              <h2 className="mt-3.5 text-4xl font-extrabold tracking-tight sm:text-5xl text-white">
                 The technical standard
                 <br />
                 for workflow execution.
               </h2>
             </div>
-            <p className="max-w-md text-sm leading-relaxed text-white/60">
+            <p className="max-w-md text-sm leading-relaxed text-slate-400">
               NEXUS combines topological graph traversal, isolated node runners, and real-time step streaming.
             </p>
           </div>
 
           <div className="features-grid mt-16 grid gap-6 md:grid-cols-3">
             <FeatureCard
-              icon={<GitBranch className="h-5 w-5 text-[#ff8b72]" />}
+              icon={<GitBranch className="h-5 w-5 text-indigo-400" />}
               number="01"
               title="Topological Execution"
               text="Nodes execute strictly respecting dependency edges. Branching, parallel chains, and fallbacks are handled deterministically."
             />
             <FeatureCard
-              icon={<Cpu className="h-5 w-5 text-[#43bcae]" />}
+              icon={<Cpu className="h-5 w-5 text-sky-400" />}
               number="02"
               title="Universal AI Abstraction"
               text="Plug in Google Gemini, OpenAI, or Anthropic models with unified prompt templates and automatic variable hydration."
             />
             <FeatureCard
-              icon={<Shield className="h-5 w-5 text-[#ff8b72]" />}
+              icon={<Shield className="h-5 w-5 text-emerald-400" />}
               number="03"
               title="SSRF-Guarded HTTP Client"
               text="Outbound HTTP nodes reject loopback, internal RFC 1918 networks, and metadata endpoints to keep your infrastructure secure."
@@ -409,13 +403,13 @@ export default function Home() {
           </div>
 
           {/* Interactive Live Execution Terminal scrubbed on scroll */}
-          <div className="terminal-console-box mt-16 overflow-hidden rounded-[32px] border border-white/10 bg-[#0f1720] shadow-2xl">
-            <div className="flex items-center justify-between border-b border-white/10 px-6 py-3.5 bg-black/30">
+          <div className="terminal-console-box mt-16 overflow-hidden rounded-[32px] border border-white/10 bg-[#060911] shadow-2xl">
+            <div className="flex items-center justify-between border-b border-white/10 px-6 py-3.5 bg-black/40">
               <div className="flex items-center gap-2">
                 <span className="h-3 w-3 rounded-full bg-rose-500/80" />
                 <span className="h-3 w-3 rounded-full bg-amber-500/80" />
                 <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
-                <span className="ml-3 font-mono text-xs text-white/50">
+                <span className="ml-3 font-mono text-xs text-slate-400">
                   nexus-engine.log — stream-telemetry
                 </span>
               </div>
@@ -430,39 +424,33 @@ export default function Home() {
               <TerminalLogLine
                 time="14:48:01.104"
                 source="GRAPH_RUNNER"
-                type="INFO"
                 message="Workflow e48b-39f1 triggered via inbound HTTP webhook (/api/v1/tickets)"
                 badge="200 OK"
               />
               <TerminalLogLine
                 time="14:48:01.128"
                 source="TOPOLOGY"
-                type="SUCCESS"
                 message="Graph resolved: 4 nodes, 3 directed edges, 0 cyclic loops detected"
               />
               <TerminalLogLine
                 time="14:48:01.242"
                 source="AI_GEMINI"
-                type="INFO"
                 message="Inference completed: gemini-1.5-flash latency=114ms tokens=84"
                 highlight="sentiment: positive, urgency: high"
               />
               <TerminalLogLine
                 time="14:48:01.418"
                 source="HTTP_CLIENT"
-                type="SUCCESS"
                 message="SSRF validation passed. POST https://httpbin.org/anything -> 200 OK"
               />
               <TerminalLogLine
                 time="14:48:01.485"
                 source="DATABASE"
-                type="SUCCESS"
                 message="Transaction committed: 1 record written to table 'support_tickets'"
               />
               <TerminalLogLine
                 time="14:48:01.490"
                 source="ENGINE"
-                type="COMPLETED"
                 message="Workflow execution finished in 386ms total duration. State persisted."
                 badge="SUCCESS"
               />
@@ -472,18 +460,18 @@ export default function Home() {
       </section>
 
       {/* CTA SECTION */}
-      <section className="bg-[#fffdf9] px-6 py-24">
-        <div className="cta-banner-box mx-auto max-w-5xl rounded-[36px] bg-[#17202a] p-10 md:p-16 text-center text-white shadow-2xl relative overflow-hidden">
-          <div className="pointer-events-none absolute -right-20 -bottom-20 h-72 w-72 rounded-full bg-[#ff6749]/15 blur-[90px]" />
-          <div className="pointer-events-none absolute -left-20 -top-20 h-72 w-72 rounded-full bg-[#2a9d8f]/15 blur-[90px]" />
+      <section className="bg-white px-6 py-24">
+        <div className="cta-banner-box mx-auto max-w-5xl rounded-[36px] bg-[#090d16] p-10 md:p-16 text-center text-white shadow-2xl relative overflow-hidden border border-slate-800">
+          <div className="pointer-events-none absolute -right-20 -bottom-20 h-72 w-72 rounded-full bg-indigo-500/15 blur-[90px]" />
+          <div className="pointer-events-none absolute -left-20 -top-20 h-72 w-72 rounded-full bg-sky-500/15 blur-[90px]" />
 
-          <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#ff8b72]">
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-indigo-400 font-mono">
             Ready to Build?
           </p>
-          <h2 className="mt-4 text-3xl font-black tracking-tight sm:text-5xl">
+          <h2 className="mt-4 text-3xl font-black tracking-tight sm:text-5xl text-white">
             Start automating with NEXUS today.
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-white/70">
+          <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-slate-300">
             Create visual workflows, connect AI models, and run reliable integrations in minutes.
           </p>
 
@@ -491,7 +479,7 @@ export default function Home() {
             <StartBuildingButton />
             <Link
               href="/docs"
-              className="rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-white/20 hover:-translate-y-0.5"
+              className="rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-white/20 hover:-translate-y-0.5"
             >
               Read the Docs
             </Link>
@@ -500,28 +488,28 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-[#eee8df] bg-[#fffdf9] px-6 py-12 text-xs text-[#8a94a6]">
+      <footer className="border-t border-slate-200/80 bg-[#f8fafc] px-6 py-12 text-xs text-slate-500">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 md:flex-row">
           <div className="flex items-center gap-3">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#17202a]">
-              <div className="h-2 w-2 rounded-full bg-[#ff6749]" />
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-950 text-white font-black text-xs">
+              N
             </div>
-            <span className="font-bold text-[#17202a]">NEXUS Workflow OS</span>
+            <span className="font-bold text-slate-900">NEXUS Workflow OS</span>
             <span>—</span>
             <span>Visual Automation Platform</span>
           </div>
 
-          <div className="flex items-center gap-6 font-semibold text-[#667085]">
-            <Link href="/product" className="hover:text-[#17202a] transition">
+          <div className="flex items-center gap-6 font-semibold text-slate-600">
+            <Link href="/product" className="hover:text-slate-950 transition">
               Product
             </Link>
-            <Link href="/workflows" className="hover:text-[#17202a] transition">
+            <Link href="/workflows" className="hover:text-slate-950 transition">
               Workflows
             </Link>
-            <Link href="/features" className="hover:text-[#17202a] transition">
+            <Link href="/features" className="hover:text-slate-950 transition">
               Features
             </Link>
-            <Link href="/docs" className="hover:text-[#17202a] transition">
+            <Link href="/docs" className="hover:text-slate-950 transition">
               Documentation
             </Link>
           </div>
@@ -555,11 +543,11 @@ function InteractiveDiagramCard({
       className={`diagram-node-card w-full sm:w-60 rounded-2xl border bg-white p-5 transition-all duration-300 ${
         isActive
           ? `border-transparent ${activeColor} -translate-y-2`
-          : "border-[#e8e1d8] shadow-sm hover:-translate-y-1 hover:shadow-md"
+          : "border-slate-200/90 shadow-2xs hover:-translate-y-1 hover:shadow-md"
       }`}
     >
       <div className="flex items-center justify-between">
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#faf7f2]">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-50 text-slate-800">
           {icon}
         </div>
         <span className={`rounded-md px-2 py-0.5 font-mono text-[9px] font-bold ${badgeColor}`}>
@@ -567,15 +555,15 @@ function InteractiveDiagramCard({
         </span>
       </div>
 
-      <h3 className="mt-3 text-sm font-bold text-[#17202a]">{title}</h3>
-      <p className="mt-1 font-mono text-[11px] text-[#8a94a6] truncate">{detail}</p>
+      <h3 className="mt-3 text-sm font-bold text-slate-900">{title}</h3>
+      <p className="mt-1 font-mono text-[11px] text-slate-500 truncate">{detail}</p>
 
       {/* Dynamic status chip */}
-      <div className="mt-3.5 pt-2.5 border-t border-[#f4efe8] flex items-center justify-between text-[10px]">
-        <span className="font-semibold text-[#667085]">Status</span>
+      <div className="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[10px]">
+        <span className="font-semibold text-slate-500">Status</span>
         <span
           className={`font-mono font-bold transition-colors ${
-            isActive ? "text-[#ff6749]" : "text-[#8a94a6]"
+            isActive ? "text-indigo-600" : "text-slate-400"
           }`}
         >
           {isActive ? statusText : "Ready"}
@@ -596,22 +584,22 @@ function FlowConnector({
 }) {
   return (
     <div className="flex flex-col items-center justify-center gap-1">
-      <span className="hidden font-mono text-[9px] uppercase tracking-wider text-[#8a94a6] lg:block">
+      <span className="hidden font-mono text-[9px] uppercase tracking-wider text-slate-400 lg:block">
         {label}
       </span>
       <div
         className={`hidden lg:flex items-center text-lg font-bold transition-all duration-300 ${
-          isFlowing ? "scale-125 translate-x-1" : "opacity-50"
+          isFlowing ? "scale-125 translate-x-1" : "opacity-40"
         }`}
-        style={{ color: isFlowing ? color : "#8a94a6" }}
+        style={{ color: isFlowing ? color : "#94a3b8" }}
       >
         →
       </div>
       <div
         className={`lg:hidden text-lg font-bold transition-all duration-300 ${
-          isFlowing ? "scale-125 translate-y-1" : "opacity-50"
+          isFlowing ? "scale-125 translate-y-1" : "opacity-40"
         }`}
-        style={{ color: isFlowing ? color : "#8a94a6" }}
+        style={{ color: isFlowing ? color : "#94a3b8" }}
       >
         ↓
       </div>
@@ -636,10 +624,10 @@ function FeatureCard({
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10">
           {icon}
         </div>
-        <span className="font-mono text-xs font-bold text-[#ff8b72]">{number}</span>
+        <span className="font-mono text-xs font-bold text-indigo-400">{number}</span>
       </div>
-      <h3 className="mt-8 text-xl font-bold">{title}</h3>
-      <p className="mt-3 text-xs leading-relaxed text-white/60">{text}</p>
+      <h3 className="mt-8 text-xl font-bold text-white">{title}</h3>
+      <p className="mt-3 text-xs leading-relaxed text-slate-400">{text}</p>
     </div>
   );
 }
@@ -647,28 +635,26 @@ function FeatureCard({
 function TerminalLogLine({
   time,
   source,
-  type,
   message,
   badge,
   highlight,
 }: {
   time: string;
   source: string;
-  type: string;
   message: string;
   badge?: string;
   highlight?: string;
 }) {
   return (
-    <div className="terminal-line-item flex flex-wrap items-baseline gap-2.5 text-white/80">
-      <span className="text-white/40">{time}</span>
-      <span className="rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-semibold text-[#43bcae]">
+    <div className="terminal-line-item flex flex-wrap items-baseline gap-2.5 text-slate-300">
+      <span className="text-slate-500">{time}</span>
+      <span className="rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-semibold text-indigo-300">
         [{source}]
       </span>
-      <span className="flex-1 text-white/70">
+      <span className="flex-1 text-slate-300">
         {message}
         {highlight && (
-          <span className="ml-2 font-bold text-[#ff8b72]">({highlight})</span>
+          <span className="ml-2 font-bold text-indigo-400">({highlight})</span>
         )}
       </span>
       {badge && (

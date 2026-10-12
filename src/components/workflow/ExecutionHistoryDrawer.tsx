@@ -46,10 +46,10 @@ export function ExecutionHistoryDrawer({
   const [selectedId, setSelectedId] = useState<string | null>(selectedExecutionId || null);
   const [expandedNodes, setExpandedNodes] = useState<Record<string, boolean>>({});
 
-  const loadHistory = useCallback(async () => {
+  const loadHistory = useCallback(async (showLoading = true) => {
     if (!workflowId) return;
     try {
-      setLoading(true);
+      if (showLoading) setLoading(true);
       const res = await fetch(`/api/nexus/workflows/${workflowId}/executions`, {
         credentials: "include",
       });
@@ -66,7 +66,7 @@ export function ExecutionHistoryDrawer({
 
   useEffect(() => {
     if (isOpen) {
-      loadHistory();
+      loadHistory(false);
     }
   }, [isOpen, loadHistory]);
 

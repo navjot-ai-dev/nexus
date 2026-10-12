@@ -246,7 +246,7 @@ export default function EditWorkflowPage() {
   /* =========================================
      SAVE WORKFLOW
   ========================================= */
-  const saveWorkflow = async () => {
+  const saveWorkflow = useCallback(async () => {
     if (!workflow) return;
 
     try {
@@ -277,7 +277,7 @@ export default function EditWorkflowPage() {
     } finally {
       setSaving(false);
     }
-  };
+  }, [workflow, workflowId, nodes, edges]);
 
   /* =========================================
      EXECUTE WORKFLOW
@@ -405,7 +405,7 @@ export default function EditWorkflowPage() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [workflow, nodes, edges]);
+  }, [saveWorkflow]);
 
   if (loading) {
     return (

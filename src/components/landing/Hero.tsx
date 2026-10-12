@@ -9,9 +9,9 @@ import { Zap, Sparkles, Shield, Compass } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen overflow-hidden bg-[#fffdf9] px-6 pt-32">
+    <section className="hero-section relative min-h-screen overflow-hidden bg-[#fffdf9] px-6 pt-32">
       {/* Soft background ambient glows */}
-      <div className="pointer-events-none absolute inset-0">
+      <div className="hero-ambient-glows pointer-events-none absolute inset-0">
         <div className="absolute -left-36 top-36 h-96 w-96 rounded-full bg-[#ffb69e]/15 blur-[120px]" />
         <div className="absolute -right-24 top-44 h-112 w-112 rounded-full bg-[#9be4da]/20 blur-[130px]" />
         <div className="absolute -bottom-36 left-[40%] h-96 w-120 rounded-full bg-[#f7c99f]/15 blur-[130px]" />
@@ -25,7 +25,7 @@ export default function Hero() {
       {/* Main Container */}
       <div className="relative z-10 mx-auto grid min-h-[calc(100vh-130px)] max-w-7xl items-center gap-10 lg:grid-cols-[1fr_1fr]">
         {/* LEFT Hero Content */}
-        <div className="relative z-30 pb-16 lg:pb-0">
+        <div className="hero-content relative z-30 pb-16 lg:pb-0">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
@@ -93,9 +93,9 @@ export default function Hero() {
         </div>
 
         {/* RIGHT Interactive 3D / Floating Nodes Canvas */}
-        <div className="relative h-[480px] lg:h-[580px]">
+        <div className="hero-3d-scene relative h-[480px] lg:h-[580px]">
           {/* 3D Scene */}
-          <div className="absolute inset-0">
+          <div className="hero-scene-canvas absolute inset-0">
             <Scene />
           </div>
 
@@ -104,21 +104,21 @@ export default function Hero() {
             icon="⚡"
             title="Webhook"
             description="Incoming payload"
-            className="left-[6%] top-[12%]"
+            className="hero-floating-card-1 left-[6%] top-[12%]"
           />
 
           <WorkflowCard
             icon="✦"
             title="AI Processor"
             description="Reasoning & extraction"
-            className="right-[4%] top-[30%]"
+            className="hero-floating-card-2 right-[4%] top-[30%]"
           />
 
           <WorkflowCard
             icon="◉"
             title="Database"
             description="Storage & sync"
-            className="bottom-[18%] right-[8%]"
+            className="hero-floating-card-3 bottom-[18%] right-[8%]"
           />
 
           {/* Canvas Tag */}
